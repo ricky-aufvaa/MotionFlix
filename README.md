@@ -5,7 +5,7 @@ This scripts lets you stream your favourite shows, movies, animes etc. directly 
 
 ## Demo
 
-/tenflicks_demo.gif
+![](https://github.com/ricky-aufvaa/MotionFlix/blob/main/tenflicks_demo.gif)
 
 
 ## Requirements
