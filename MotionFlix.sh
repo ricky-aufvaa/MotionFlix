@@ -1,7 +1,11 @@
 #!/bin/bash
 
-menu="dmenu -i -l 25"
-query=$(dmenu -p "Search it: " <&-)
+menu="pmenu"
+query=$(printf "%s" "$*")
+if [ $# -eq 0 ];
+then echo "Make sure you pass an argument"
+	exit
+else
 query="$(sed 's/ /\%20/g' <<<$query)"
 cachedir="$HOME/testing/netflix/cache"
 baseurl="https://thepiratebay.party"
@@ -13,13 +17,7 @@ size=$(cat $cachedir/tmp.html |grep -Eo 'align="right".*<'| sed -e 's/>/ /g'|sed
 
 seeders=$(cat $cachedir/tmp.html |grep -Eo 'align="right".*<'| sed -e 's/>/ /g'|sed 's/</ /g'|sed 's/\&nbsp\;//g'|cut -d' ' -f2| sed 's/iB/\n/g'| grep -E  'G|M$' -A 2| grep -E -v 'G|M$'|sed -e '/^$/d' -e '/^-/d' > $cachedir/seeds.bw)
 
-LINE=$(paste -d\  $cachedir/seeds.bw $cachedir/size.bw  $cachedir/title.bw| $menu|sed 's/"//g'|cut -d' ' -f3-|sed 's/ /_/g')
+LINE=$(paste -d\  $cachedir/seeds.bw $cachedir/size.bw  $cachedir/title.bw| pmenu|sed 's/"//g'|cut -d' ' -f3-|sed 's/ /_/g')
 magnet=$(cat $cachedir/tmp.html |grep -F $LINE -A 3| grep -Eo 'magnet:?.*Download'| sed 's/\"//g'|cut -d' ' -f1 )
-#if [[ "$1" == '$stream' ]];
-#then
-	peerflix -q  -a -v "$magnet"  
-#else
-#	notify-send "Downloading "
-#	qbittorrent "$magnet"
-#fi
-
+peerflix -q  -a -v "$magnet"  
+fi
