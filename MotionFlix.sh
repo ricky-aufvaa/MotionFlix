@@ -19,5 +19,6 @@ seeders=$(cat $cachedir/tmp.html |grep -Eo 'align="right".*<'| sed -e 's/>/ /g'|
 
 LINE=$(paste -d\  $cachedir/seeds.bw $cachedir/size.bw  $cachedir/title.bw| $menu|sed 's/"//g'|cut -d' ' -f3-|sed 's/ /_/g')
 magnet=$(cat $cachedir/tmp.html |grep -F $LINE -A 3| grep -Eo 'magnet:?.*Download'| sed 's/\"//g'|cut -d' ' -f1 )
-peerflix -q  -a -v "$magnet"  
+qbittorrent "$magnet" &
+#peerflix -q  -a -v "$magnet"  
 fi
