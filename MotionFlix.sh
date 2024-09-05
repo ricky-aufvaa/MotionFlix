@@ -8,7 +8,7 @@ then echo "Make sure you pass an argument"
 else
 query="$(sed 's/ /\%20/g' <<<$query)"
 cachedir="$HOME/testing/netflix/cache"
-baseurl="https://thepiratebay.party"
+baseurl="https://thepiratebay10.info"
 
 curl -s $baseurl/search/$query/1/99/0 > $cachedir/tmp.html
 title=$(cat $cachedir/tmp.html |grep -Eo 'title="Details.*"'|cut -d' ' -f3- >$cachedir/title.bw)
